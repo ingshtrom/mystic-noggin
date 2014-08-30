@@ -1,6 +1,10 @@
-var Hapi = require('hapi');
-var server = new Hapi.Server();
+var config = require('./app-config'),
+    logger = require('./logger');
 
-server.start(function () {
-    console.log('Server running at:', server.info.uri);
-});
+require('./hapi-server');
+
+logger.log('debug', 'Config...');
+logger.log('debug', '.app', config.app);
+logger.log('debug', '.server', config.server);
+logger.log('debug', '.logger', config.logger);
+logger.log('debug', '...Config');

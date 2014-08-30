@@ -1,5 +1,5 @@
-var winston = require('winston')
-  config = require('./app-config');
+var winston = require('winston'),
+    config = require('./app-config');
 
 var consoleConfig, fileConfig;
 
@@ -22,20 +22,20 @@ fileConfig = {
 winston.loggers.options.transports = [
   new (winston.transports.Console) (consoleConfig),
   new (winston.transports.File) (fileConfig)
-]
+];
 
 // define different loggers... aka categories
 // by providing this custom namespace, we have
 // easy accessors to all of our custom loggers!
-winston.mystic = {}
+winston.mystic = {};
 
-winston.loggers.add('api')
-winston.mystic.api = winston.loggers.get('api')
+winston.loggers.add('api');
+winston.mystic.api = winston.loggers.get('api');
 
-winston.loggers.add('misc')
-winston.mystic.misc = winston.loggers.get('misc')
+winston.loggers.add('misc');
+winston.mystic.misc = winston.loggers.get('misc');
 
 // TODO(Alex.Hokanson): send an email when winston catches errors
-winston.exitOnError = false
+winston.exitOnError = false;
 
-module.exports = winston
+module.exports = winston;

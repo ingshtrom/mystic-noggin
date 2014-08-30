@@ -4,7 +4,8 @@
   "description": "Website for http://www.mysticgear.com",
   "main": "_index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node _index.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   },
   "homepage": "https://github.com/ingshtrom/mystic-noggin",
   "dependencies": {
-    "hapi": "^6.6.0",
+    "good": "^2.2.3",
+    "hapi": "^6.7.1",
     "winston": "^0.7.3"
   },
   "devDependencies": {

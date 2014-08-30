@@ -1,11 +1,17 @@
 var path = require('path');
 
+module.exports.app = {
+  root: path.resolve(__dirname, '../../')
+};
+
 module.exports.server = {
   port: 3000
 };
 
+var logRoot = path.resolve(module.exports.app.root, 'logs');
 module.exports.logger = {
-  defaultLogFile: path.resolve(global.appRoot, "logs", "mystic-noggin.log"),
-  logLevel: "info",
+  logDir: logRoot,
+  defaultLogFile: path.resolve(logRoot, "mystic-noggin.log"),
+  logLevel: "debug",
   maxFileSize: 102400
 };
