@@ -1,10 +1,11 @@
 var config = require('./app-config'),
-    logger = require('./logger');
+    logger = require('./logger').logger,
+    util = require('util');
 
 require('./hapi-server');
 
-logger.log('debug', 'Config...');
-logger.log('debug', '.app', config.app);
-logger.log('debug', '.server', config.server);
-logger.log('debug', '.logger', config.logger);
-logger.log('debug', '...Config');
+logger.misc.debug('Config...');
+logger.misc.debug('.app', config.app);
+logger.misc.debug('.server', config.server);
+logger.misc.debug('.logger', config.logger);
+logger.misc.debug('...Config');

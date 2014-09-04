@@ -1,6 +1,6 @@
 var config = require('./app-config');
 
-module.exports = function(server) {
+module.exports.config = function(server) {
   // config Good server logging for Hapi
   var options = {
       broadcastInterval: 1000,

@@ -1,4 +1,4 @@
-module.exports = function(server) {
+module.exports.config = function(server) {
   server.route({
       method: 'GET',
       path: '/',

@@ -38,4 +38,4 @@ winston.mystic.misc = winston.loggers.get('misc');
 // TODO(Alex.Hokanson): send an email when winston catches errors
 winston.exitOnError = false;
 
-module.exports = winston;
+module.exports.logger = winston.mystic;
