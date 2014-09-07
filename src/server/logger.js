@@ -1,3 +1,11 @@
+/**
+ * Configure custom loggers.
+ *
+ * @module mystic-noggin
+ * @submodule server/logger
+ * @requires {module} winston
+ * @requires {submodule} server/app-config
+ */
 var winston = require('winston'),
     config = require('./app-config');
 
@@ -32,10 +40,20 @@ winston.mystic = {};
 winston.loggers.add('api');
 winston.mystic.api = winston.loggers.get('api');
 
+winston.loggers.add('db');
+winston.mystic.db = winston.loggers.get('db');
+
 winston.loggers.add('misc');
 winston.mystic.misc = winston.loggers.get('misc');
 
 // TODO(Alex.Hokanson): send an email when winston catches errors
 winston.exitOnError = false;
 
+/**
+ * A 'winston' instance that is
+ * customized for the current app.
+ *
+ * @type {object}
+ * @public
+ */
 module.exports.logger = winston.mystic;
