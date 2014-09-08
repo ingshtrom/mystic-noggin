@@ -18,7 +18,8 @@ var mongoose = require('mongoose'),
     fs = require('fs'),
     path = require('path'),
     appConfig = require('../app-config'),
-    logger = require('../logger').logger;
+    logger = require('../logger').logger,
+    schemas = require('./schemas/_bootstrap');
 
 /**
  * Whether or not the database connection is open
@@ -47,7 +48,7 @@ module.exports.start = function() {
   mongoose.connection.once('open', function() {
     logger.db.info('connection with mongodb server established.');
     isOpen = true;
-    _loadModels();
+    schemas.load();
   });
 };
 
@@ -61,50 +62,6 @@ module.exports.start = function() {
 module.exports.close = function() {
   mongoose.connection.close();
   isOpen = false;
-};
-
-/**
- * loads all models for all mongoose schemas
- * @function _loadModels
- * @return {void}
- */
-var _loadModels = function() {
-  var applyCb = function(schemaSMObj) {
-    // NOTE (Alex.Hokanson): this assumes that all schema submodule
-    // implements the load() function.  I'm not sure of how to enforce
-    // this since Javascrip is such a dynamic language.
-    if (typeof schemaSMObj.load === 'function') {
-      schemaSMObj.load();
-      logger.db.info('schema loaded into mongoose: ' + schemaSMObj.id);
-    } else {
-      logger.db.error('error loading schema for ' + schemaName);
-    }
-  };
-  var resultCb = function(err) {
-    if (err) {
-      logger.db.error('Error loading a schema: ' + err);
-    }
-  };
-
-  async.eachSeries(_getSchemas(), applyCb, resultCb);
-};
-
-/**
- * Look for all submodules within the schema/ directory
- * and load them into an array
- *
- * @function_getSchemas
- * @private
- * @return {submodule[]}
- */
-var _getSchemas = function() {
-  var schemaDirName = 'schemas',
-      schemasDir = path.resolve(__dirname, schemaDirName),
-      schemas = fs.readdirSync(schemasDir);
-  return _(schemas).each(function(schemaPath) {
-    var schemaName = path.basename(schemaPath, '.js');
-    return require('./' + schemaDirName + '/' + schemaName);
-  });
 };
 
 /**

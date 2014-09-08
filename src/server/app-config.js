@@ -51,7 +51,7 @@ var logRoot = path.resolve(module.exports.app.root, 'logs');
 module.exports.logger = {
   logDir: logRoot,
   defaultLogFile: path.resolve(logRoot, "mystic-noggin.log"),
-  logLevel: 'debug',
+  logLevel: 'silly',
   maxFileSize: 102400
 };
 
