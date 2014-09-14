@@ -32,6 +32,14 @@ module.exports.schema = {}
 module.exports.load = ->
   Schema = mongoose.Schema
 
+  ###
+    @schema User
+    @param {string,required} username
+    @param {string,required} password
+    @param {string} meta.firstname
+    @param {string} meta.lastname
+    @param {string} meta.email
+  ###
   module.exports.schema = userSchema = new Schema(
     username: { type: String, required: true }
     password: { type: String, required: true }

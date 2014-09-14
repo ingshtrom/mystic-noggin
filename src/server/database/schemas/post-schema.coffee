@@ -38,14 +38,28 @@ module.exports.schema = {}
 module.exports.load = ->
   Schema = mongoose.Schema
 
+  ###
+    @schema Post
+    @param {string}                     title
+    @param {objectid,required}          author            - see (server/database/schemas/user-schema)
+    @param {date,default=Date.now}      created
+    @param {date,default=Date.now}      updated
+    @param {string,required}            content
+    @param {objectid,required}          type              - see (server/database/schemas/post-schema)
+    @param {[objectid]}                 tags              - see (server/database/schemas/tag-schema)
+    @param {[document]}                 comments
+    @param {string,required}            comments.body
+    @param {date,default=Date.now}      comments.date
+    @param {string,default="Anonymous"} comments.name
+  ###
   module.exports.schema = postSchema = new Schema(
     title: String
-    author: { type: Schema.Types.ObjectId, require: true }   # user-schema
+    author: { type: Schema.Types.ObjectId, require: true }    # user-schema
     created: { type: Date, default: Date.now }
     updated: { type: Date, default: Date.now }
     content: { type: String, required: true }
-    type: { type: Schema.Types.ObjectId, required: true }    # post-type-schema
-    tags: [Schema.Types.ObjectId]  # tag-schema
+    type: { type: Schema.Types.ObjectId, required: true }     # post-type-schema
+    tags: [Schema.Types.ObjectId]                             # tag-schema
     comments: [{
       body: { type: String, required: true }
       date: { type: Date, default: Date.now }

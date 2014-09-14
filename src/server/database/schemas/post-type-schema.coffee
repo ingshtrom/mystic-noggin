@@ -32,6 +32,11 @@ module.exports.schema = {}
 module.exports.load = ->
   Schema = mongoose.Schema
 
+  ###
+    @schema PostType
+    @param {string,required} name
+    @param {number,default=0} usage
+  ###
   module.exports.schema = postTypeSchema = new Schema(
     name: { type: String, required: true }
     usage: { type: Number, default: 0 }

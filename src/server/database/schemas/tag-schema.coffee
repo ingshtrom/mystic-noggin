@@ -32,6 +32,11 @@ module.exports.schema = {}
 module.exports.load = ->
   Schema = mongoose.Schema
 
+  ###
+    @schema Tag
+    @param {string,required} name     - name of the the tag
+    @param {number,default=0} usage  - the number of posts this Tag is used in
+  ###
   module.exports.schema = tagSchema = new Schema(
     name: { type: String, required: true }
     usage: { type: Number, default: 0 }

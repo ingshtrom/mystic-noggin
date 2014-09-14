@@ -14,9 +14,11 @@ tags = require '../database/schemas/tag-schema'
 module.exports.config = (server) ->
   ###
     Get all tags defined
+    @api {GET} /api/tags
+    @return {object[]}    - an array of tags objects
   ###
   server.route
     method: 'GET'
     path: '/api/tags'
     handler: (request, reply) ->
-      reply('FooBiz!')
+      reply(tags.model.find())
