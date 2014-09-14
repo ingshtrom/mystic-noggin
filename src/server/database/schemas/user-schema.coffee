@@ -33,8 +33,8 @@ module.exports.load = ->
   Schema = mongoose.Schema
 
   module.exports.schema = userSchema = new Schema(
-    username: String
-    password: String
+    username: { type: String, required: true }
+    password: { type: String, required: true }
     meta: {
       firstName: String
       lastName: String

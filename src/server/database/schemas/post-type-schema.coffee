@@ -33,7 +33,8 @@ module.exports.load = ->
   Schema = mongoose.Schema
 
   module.exports.schema = postTypeSchema = new Schema(
-    name: String
+    name: { type: String, required: true }
+    usage: { type: Number, default: 0 }
   )
 
   module.exports.model = mongoose.model('PostType', postTypeSchema)

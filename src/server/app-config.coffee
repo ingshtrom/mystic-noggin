@@ -52,11 +52,9 @@ module.exports.logger =
  @property {string} serverName      - name of the server hosting mongodb
  @property {string} user            - name of user to authenticate as
  @property {string} pass            - password to authenticate with
- @property {string} prefix          - prefix for all tables. Does NOT apply to db names or document keys.
 ###
 module.exports.database =
   dbName: 'mn_test'
   serverName: 'localhost'
   user: 'tester'
   pass: '1234'
-  prefix: 'mn'

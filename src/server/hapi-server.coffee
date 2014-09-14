@@ -11,8 +11,9 @@
 Hapi = require('hapi')
 logger = require('./logger').logger
 config = require('./app-config')
-routeConfig = require('./api/_index').config
+routeConfig = require('./api/').config
 packConfig = require('./hapi-pack-config').config
+
 
 ###
   Start the Hapi server
@@ -25,3 +26,4 @@ module.exports.start = ->
   server = routeConfig(server)
   server = packConfig(server)
   server.start -> logger.misc.debug('Server running at:', server.info.uri)
+  return server

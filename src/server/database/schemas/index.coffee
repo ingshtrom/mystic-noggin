@@ -13,7 +13,7 @@ async = require 'async'
 schemas = [
   require './tag-schema'            # required by ./post-schema
   require './post-type-schema'      # required by ./post-schema
-  require './user-scham'            # required by ./post-schema
+  require './user-schema'            # required by ./post-schema
   require './post-schema'
 ]
 

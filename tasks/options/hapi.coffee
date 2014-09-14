@@ -1,16 +1,13 @@
 ###
-  grunt-hapi config
+  configuration for "hapi" tasks
   @module mystic-noggin
   @submodule Gruntfile
   @task hapi
-  @requires {module} path
 ###
-path = require 'path'
-
 module.exports =
   custom_options:
     options:
-      server: path.resolve './devServer'
+      server: require('path').resolve('./build/server/index')
       bases:
-        '/src': path.resolve './src/server/'
-        '/build': path.resolve './build/server'
+        "/build": "./<%= gruntConfig.pubDir %>"
+        "/src": "./<%= gruntConfig.srcDir %>"

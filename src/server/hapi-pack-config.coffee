@@ -2,9 +2,11 @@
   Configure any plugins or packs for the Hapi server
   @module mystic-noggin
   @submodule server/hapi-pack-config
+  @requires {module} path
   @requires {submodule} server/app-config
 ###
-config = require('./app-config')
+path = require 'path'
+config = require './app-config'
 
 ###
   Do the actual configuration specified by this module.
@@ -14,6 +16,7 @@ config = require('./app-config')
   @return {object}        - hapi server object with packs attached
 ###
 module.exports.config = (server) ->
+  logFile = path.resolve(config.logger.logDir, "stats.log")
   # config Good server logging for Hapi
   options =
     broadcastInterval: 1000
@@ -21,7 +24,7 @@ module.exports.config = (server) ->
     maxLogSize: config.logger.maxFileSize
     subscribers:
       'console': ['ops', 'request', 'log', 'error']
-  options.subscribers[config.logger.logDir] = ['ops', 'request', 'log', 'error']
+  options.subscribers[logFile] = ['ops', 'request', 'log', 'error']
 
   server.pack.register({
     plugin: require('good')

@@ -10,7 +10,7 @@
 mongoose = require('mongoose')
 tagsSchema = require('./tag-schema').schema
 postTypeSchema = require('./post-type-schema').schema
-userSchema = require './user-schema' .schema
+userSchema = require('./user-schema').schema
 
 ###
  * The model for Posts. This can
@@ -40,14 +40,14 @@ module.exports.load = ->
 
   module.exports.schema = postSchema = new Schema(
     title: String
-    author: ObjectId  # user-schema
+    author: { type: Schema.Types.ObjectId, require: true }   # user-schema
     created: { type: Date, default: Date.now }
     updated: { type: Date, default: Date.now }
-    content: String
-    type: ObjectId    # post-type-schema
-    tags: [ObjectId]  # tag-schema
+    content: { type: String, required: true }
+    type: { type: Schema.Types.ObjectId, required: true }    # post-type-schema
+    tags: [Schema.Types.ObjectId]  # tag-schema
     comments: [{
-      body: String
+      body: { type: String, required: true }
       date: { type: Date, default: Date.now }
       name: { type: String, default: 'Anonymous' }
     }]

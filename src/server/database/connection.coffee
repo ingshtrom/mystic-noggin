@@ -17,7 +17,7 @@ fs = require('fs')
 path = require('path')
 appConfig = require('../app-config')
 logger = require('../logger').logger
-schemas = require('./schemas/_bootstrap')
+schemas = require('./schemas')
 
 ###
  * Whether or not the database connection is open
@@ -66,12 +66,14 @@ module.exports.close = ->
 ###
 _generateOptionsObj = ->
   options =
-    server: {}
+    server:
+      auto_reconnect: true
+      poolSize: 1
     replset: {}
+    user: appConfig.database.user
+    pass: appConfig.database.pass
 
   options.server.socketOptions = options.replset.socketOptions = { keepAlive: 1 }
-  options.user = appConfig.database.user
-  options.pass = appConfig.database.pass
   return options
 
 ###

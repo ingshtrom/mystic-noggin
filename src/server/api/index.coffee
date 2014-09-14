@@ -2,7 +2,9 @@
   Bootstrap all API config together
   @module mystic-noggin
   @submodule server/api
+  @requires {submodule} server/api/tags
 ###
+tags = require './tags'
 
 ###
   Bootstrap and configure all API endpoints
@@ -17,5 +19,7 @@ module.exports.config = (server) ->
     path: '/'
     handler: (request, reply) ->
       reply('FOOBAR!')
+
+  tags.config(server)
 
   return server
