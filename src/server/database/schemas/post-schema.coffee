@@ -40,11 +40,12 @@ module.exports.load = ->
 
   module.exports.schema = postSchema = new Schema(
     title: String
+    author: ObjectId  # user-schema
     created: { type: Date, default: Date.now }
     updated: { type: Date, default: Date.now }
     content: String
-    type: postTypeSchema
-    tags: [tagsSchema]
+    type: ObjectId    # post-type-schema
+    tags: [ObjectId]  # tag-schema
     comments: [{
       body: String
       date: { type: Date, default: Date.now }
