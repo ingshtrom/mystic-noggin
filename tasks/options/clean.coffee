@@ -1,3 +1,9 @@
-grunt = require 'grunt'
+###
+  configuration for "clean" tasks
+  @module mystic-noggin
+  @submodule Gruntfile
+  @task clean
+  @requires {submodule} server/app-config
+###
 module.exports =
-  logs: [grunt.config('serverConfig.logger.logDir')]
+  logs: ["<%= serverConfig.logger.logDir %>", "<%= gruntConfig.pubDir %>"]
