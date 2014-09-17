@@ -4,7 +4,8 @@
   "description": "Website for http://www.mysticgear.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "grunt test:setup",
+    "test": "mocha -c --reporter spec --bail --check-leaks test-out/",
     "start": "node index.js"
   },
   "repository": {
@@ -34,6 +35,8 @@
     "winston": "^0.7.3"
   },
   "devDependencies": {
+    "chai": "^1.9.1",
+    "chai-counter": "^0.1.0",
     "coffeelint": "^1.6.0",
     "glob": "^4.0.5",
     "grunt": "^0.4.5",
@@ -43,6 +46,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-hapi": "^0.8.1",
     "load-grunt-tasks": "^0.6.0",
-    "mocha": "^1.21.4"
+    "mocha": "^1.21.4",
+    "request": "^2.42.0"
   }
 }

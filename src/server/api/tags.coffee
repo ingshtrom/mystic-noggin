@@ -22,3 +22,9 @@ module.exports.config = (server) ->
     path: '/api/tags'
     handler: (request, reply) ->
       reply(tags.model.find())
+    config:
+      description: 'Get tags'
+      tags: ['api']
+      notes: [
+        'Get all tags.'
+      ]

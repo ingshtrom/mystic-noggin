@@ -33,17 +33,24 @@ module.exports.start = ->
   dbUri = _buildConnectionString()
   options = _generateOptionsObj()
 
+  # early return in case the connection is already open
+  return mongoose.connection if mongoose.connection.readyState == 1
+
+  schemas.load()
+
   mongoose.connect(dbUri, options)
 
   mongoose.connection.on('error', logger.db.error.bind(logger.db, 'mongodb error: '))
   mongoose.connection.once('close', ->
+    isOpen = false
     logger.db.info('connection with mongodb server closed.')
   )
   mongoose.connection.once('open', ->
-    logger.db.info('connection with mongodb server established.')
     isOpen = true
-    schemas.load()
+    logger.db.info('connection with mongodb server established.')
   )
+
+  return mongoose.connection
 
 ###
  * Close the connection now!
@@ -53,7 +60,6 @@ module.exports.start = ->
 ###
 module.exports.close = ->
   mongoose.connection.close()
-  isOpen = false
 
 ###
  * Generate and return an options {object} that

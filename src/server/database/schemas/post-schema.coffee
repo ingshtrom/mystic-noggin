@@ -54,18 +54,18 @@ module.exports.load = ->
     @param {string,default="Anonymous"} comments.name
   ###
   module.exports.schema = postSchema = new Schema(
-    title: String
-    author: { type: Schema.Types.ObjectId, require: true }    # user-schema
+    title: { type: String, unique: true }
+    author: { type: Schema.Types.ObjectId, ref: 'User', require: true }
     created: { type: Date, default: Date.now }
     updated: { type: Date, default: Date.now }
-    content: { type: String, required: true }
-    type: { type: Schema.Types.ObjectId, required: true }     # post-type-schema
-    tags: [Schema.Types.ObjectId]                             # tag-schema
-    comments: [{
+    content: { type: String, required: true, unique: true }
+    type: { type: Schema.Types.ObjectId, ref: 'PostType', required: true }
+    tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+    comments: [
       body: { type: String, required: true }
       date: { type: Date, default: Date.now }
       name: { type: String, default: 'Anonymous' }
-    }]
+    ]
   )
 
   module.exports.model = mongoose.model('Post', postSchema)

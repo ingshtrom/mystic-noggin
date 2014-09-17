@@ -8,45 +8,53 @@
 winston = require('winston')
 config = require('./app-config')
 
-# remove the default Console logger
-winston.remove(winston.transports.Console)
+setup = ->
+  # add our custom transports for all loggers
+  consoleConfig =
+    level: config.logger.logLevel
+    handleExceptions: true
+    colorize: true
+    timestamp: true
+  fileConfig =
+    filename: config.logger.defaultLogFile
+    level: config.logger.logLevel
+    maxsize: config.logger.maxFileSize
+    handleExceptions: true
 
-# add our custom transports for all loggers
-consoleConfig =
-  level: config.logger.logLevel
-  handleExceptions: true
-  colorize: true
-  timestamp: true
-fileConfig =
-  filename: config.logger.defaultLogFile
-  level: config.logger.logLevel
-  maxsize: config.logger.maxFileSize
-  handleExceptions: true
-winston.loggers.options.transports = [
-  new (winston.transports.Console) (consoleConfig)
-  new (winston.transports.File) (fileConfig)
-]
+  # define different loggers... aka categories
+  # by providing this custom namespace, we have
+  # easy accessors to all of our custom loggers!
+  #
+  # We don't want to make the loggers global because
+  # the testing code needs to have custom loggers,
+  # which would conflict with the global loggers
+  myLoggers = {}
+  myLoggers.api = new winston.Logger
+    transports: [
+      new winston.transports.Console consoleConfig
+      new winston.transports.File fileConfig
+    ]
+    exitOnError: false
 
-# define different loggers... aka categories
-# by providing this custom namespace, we have
-# easy accessors to all of our custom loggers!
-winston.mystic = {}
+  myLoggers.db = new winston.Logger
+    transports: [
+      new winston.transports.Console consoleConfig
+      new winston.transports.File fileConfig
+    ]
+    exitOnError: false
 
-winston.loggers.add('api')
-winston.mystic.api = winston.loggers.get('api')
+  myLoggers.misc = new winston.Logger
+    transports: [
+      new winston.transports.Console consoleConfig
+      new winston.transports.File fileConfig
+    ]
+    exitOnError: false
 
-winston.loggers.add('db')
-winston.mystic.db = winston.loggers.get('db')
-
-winston.loggers.add('misc')
-winston.mystic.misc = winston.loggers.get('misc')
-
-# TODO(Alex.Hokanson): send an email when winston catches errors
-winston.exitOnError = false
+  return myLoggers
 
 ###
   A 'winston' instance that is
   customized for the current app.
   @type {object}
 ###
-module.exports.logger = winston.mystic
+module.exports.logger = setup()
