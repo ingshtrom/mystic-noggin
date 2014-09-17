@@ -4,8 +4,7 @@
   "description": "Website for http://www.mysticgear.com",
   "main": "index.js",
   "scripts": {
-    "pretest": "grunt test:setup",
-    "test": "mocha -c --reporter spec --bail --check-leaks test-out/",
+    "test": "mocha -c --reporter spec --recursive --bail --check-leaks test-out/server/specs/",
     "start": "node index.js"
   },
   "repository": {
@@ -36,7 +35,7 @@
   },
   "devDependencies": {
     "chai": "^1.9.1",
-    "chai-counter": "^0.1.0",
+    "chai-counter": "^1.0.0",
     "coffeelint": "^1.6.0",
     "glob": "^4.0.5",
     "grunt": "^0.4.5",

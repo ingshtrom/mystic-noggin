@@ -1,4 +1,3 @@
-timer = require 'timers'
 db = require '../../build/server/database/connection'
 post = require '../../build/server/database/schemas/post-schema'
 postType = require '../../build/server/database/schemas/post-type-schema'
@@ -52,7 +51,7 @@ cb = ->
       else
         logger.main.debug('created user')
 
-  for i in [0..9]
+  for i in [0..8]
     tmp = new Post()
     tmp.title = "post#{i}"
     tmp.author = users[i]._id
@@ -66,7 +65,20 @@ cb = ->
       else
         logger.main.debug('created post')
 
-  return
+  # need to do this so that we can close out the db connection after we know everything has finished
+  tmp = new Post()
+  tmp.title = "post#{i}"
+  tmp.author = users[i]._id
+  tmp.tags = [tags[i]._id]
+  tmp.type = postTypes[i]._id
+  tmp.content = "content biatch#{i}"
+  tmp.comments = []
+  tmp.save (err) ->
+    if err
+      logger.main.error('failed to create post: %j', err)
+    else
+      logger.main.debug('created post')
+    db.close()
 
 if conn.readyState == 1 then cb()
 else conn.on 'connected', cb

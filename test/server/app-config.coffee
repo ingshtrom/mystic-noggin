@@ -19,3 +19,6 @@ module.exports.logger =
   defaultLogFile: path.resolve(serverConfig.logger.logDir, "server_tests.log")
   logLevel: 'silly'
   maxFileSize: 102400
+
+module.exports.testData =
+  baseUrl: "http://localhost:#{serverConfig.server.port}"

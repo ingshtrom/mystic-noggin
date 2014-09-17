@@ -34,7 +34,10 @@ module.exports.start = ->
   options = _generateOptionsObj()
 
   # early return in case the connection is already open
-  return mongoose.connection if mongoose.connection.readyState == 1
+  return mongoose.connection if mongoose.connection.readyState == 1 || mongoose.connection.readyState == 2
+
+  logger.db.silly 'going to load schemas',
+    conn: mongoose.connection.readyState
 
   schemas.load()
 

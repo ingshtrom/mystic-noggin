@@ -29,8 +29,8 @@ cb = ->
   Post.remove (err) ->
     if err then logger.main.error 'Error removing Post collection: %j', err
     else logger.main.debug 'Post collection removed!'
-
-  return
+    db.close()
+    return
 
 if conn.readyState == 1 then cb()
 else conn.on 'connected', cb
