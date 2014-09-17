@@ -23,7 +23,7 @@ packConfig = require('./hapi-pack-config').config
 ###
 module.exports.start = ->
   server = new Hapi.Server(config.server.port)
-  server = routeConfig(server)
   server = packConfig(server)
+  server = routeConfig(server)
   server.start -> logger.misc.debug('Server running at:', server.info.uri)
   return server

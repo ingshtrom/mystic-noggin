@@ -7,6 +7,7 @@
 ###
 path = require 'path'
 config = require './app-config'
+pkg = require '../../package.json'
 
 ###
   Do the actual configuration specified by this module.
@@ -29,11 +30,22 @@ module.exports.config = (server) ->
   server.pack.register({
     plugin: require('good')
     options: options
-  },
-  (err) ->
+  }, (err) ->
     if (err)
-      logger.error("'Good' logger error: " + err)
-      return
+      logger.error("Failed to load Hapi plugin 'good': " + err)
+  )
+
+  options =
+    basePath: 'http://localhost:3000',
+    apiVersion: pkg.version
+    documentationPath: '/swaggerui'
+
+  server.pack.register({
+    plugin: require 'hapi-swagger'
+    options: options
+  }, (err) ->
+    if (err)
+      logger.error("Failed to load Hapi plugin 'hapi-swagger': " + err)
   )
 
   return server

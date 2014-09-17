@@ -7,3 +7,4 @@ module.exports =
   pubDir: 'build'
   srcDir: 'src'
   testDir: 'test'
+  testOutDir: 'test-out'

@@ -3,8 +3,10 @@
  * @module mystic-noggin
  * @submodule server/database/schemas/post-type-schema
  * @requires {module} mongoose
+ * @requires {submodule} server/logger
 ###
 mongoose = require('mongoose')
+logger = require('../../logger').logger
 
 ###
  * The model for PostTypes. This can
@@ -43,3 +45,5 @@ module.exports.load = ->
   )
 
   module.exports.model = mongoose.model('PostType', postTypeSchema)
+
+  logger.db.debug 'loaded PostType model into mongoose'

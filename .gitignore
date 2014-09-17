@@ -10,3 +10,4 @@ coverage
 build
 build/Release
 node_modules
+test-out

@@ -11,6 +11,7 @@ mongoose = require('mongoose')
 tagsSchema = require('./tag-schema').schema
 postTypeSchema = require('./post-type-schema').schema
 userSchema = require('./user-schema').schema
+logger = require('../../logger').logger
 
 ###
  * The model for Posts. This can
@@ -68,3 +69,5 @@ module.exports.load = ->
   )
 
   module.exports.model = mongoose.model('Post', postSchema)
+
+  logger.db.debug 'loaded Post model into mongoose'

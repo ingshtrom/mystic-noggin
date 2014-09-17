@@ -5,6 +5,7 @@
  * @requires {module} mongoose
 ###
 mongoose = require('mongoose')
+logger = require('../../logger').logger
 
 ###
  * The model for Tags. This can
@@ -43,3 +44,5 @@ module.exports.load = ->
   )
 
   module.exports.model = mongoose.model('Tag', tagSchema)
+
+  logger.db.debug 'loaded Tag model into mongoose'

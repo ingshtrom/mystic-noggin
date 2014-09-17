@@ -3,13 +3,11 @@
   @module mystic-noggin
   @submodule server
   @public
-  @requires {module} util
   @requires {submodule} server/app-config
   @requires {submodule} server/logger
   @requires {submodule} server/hapi-server
   @requires {submodule} server/database/connection
 ###
-util = require('util')
 config = require('./app-config')
 logger = require('./logger').logger
 server = require('./hapi-server')

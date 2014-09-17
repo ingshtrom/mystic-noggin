@@ -3,7 +3,6 @@
  * @module mystic-noggin
  * @submodule server/database/connection
  * @requires {module} mongoose
- * @requires {module} lodash
  * @requires {module} async
  * @requires {module} fs
  * @requires {module} path
@@ -11,7 +10,6 @@
  * @requires {submodules} server/logger
 ###
 mongoose = require('mongoose')
-_ = require('lodash')
 async = require('async')
 fs = require('fs')
 path = require('path')

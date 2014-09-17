@@ -3,8 +3,10 @@
  * @module mystic-noggin
  * @submodule server/database/schemas/user-schema
  * @requires {module} mongoose
+ * @requires {submodule} server/logger
 ###
 mongoose = require('mongoose')
+logger = require('../../logger').logger
 
 ###
  * The model for Users. This can
@@ -51,3 +53,5 @@ module.exports.load = ->
   )
 
   module.exports.model = mongoose.model('User', userSchema)
+
+  logger.db.debug 'loaded User model into mongoose'

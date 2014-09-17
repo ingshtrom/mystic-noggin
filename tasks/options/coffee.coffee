@@ -5,9 +5,15 @@
   @task coffee
 ###
 module.exports =
-  glob_to_multiple:
+  dev:
     expand: true
     cwd: "<%= gruntConfig.srcDir %>"
     src: ["**/*.coffee"]
     dest: "<%= gruntConfig.pubDir %>"
     ext: ".js"
+  test:
+    expand: true
+    cwd: '<%= gruntConfig.testDir %>'
+    src: ['**/*.coffee']
+    dest: '<%= gruntConfig.testOutDir %>'
+    ext: '.js'

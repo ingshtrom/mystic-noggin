@@ -5,6 +5,7 @@
   @requires {submodule} server/api/tags
 ###
 tags = require './tags'
+joi  = require 'joi'
 
 ###
   Bootstrap and configure all API endpoints
@@ -16,9 +17,23 @@ tags = require './tags'
 module.exports.config = (server) ->
   server.route
     method: 'GET'
-    path: '/'
-    handler: (request, reply) ->
-      reply('FOOBAR!')
+    path: '/test'
+    handler: (req, reply) -> reply('FOOBAR')
+    config:
+      description: 'Test server'
+      notes: 'Test that the server is up'
+      tags: ['api']
+  # server.route
+  #   method: 'PUT'
+  #   path: '/foobar/{a}'
+  #   handler: (request, reply) ->
+  #   config:
+  #     description: 'Get todo'
+  #     notes: 'Returns a todo item by the id passed in the path'
+  #     tags: ['api']
+  #     validate:
+  #       params:
+  #         a: joi.number().required().description('the id for the todo item')
 
   tags.config(server)
 
