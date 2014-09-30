@@ -38,3 +38,8 @@ module.exports.config = (server) ->
   tags.config(server)
 
   return server
+
+# ###
+#   Convert a query string to a query
+# ###
+# module.exports.convertQueryString = (str) ->

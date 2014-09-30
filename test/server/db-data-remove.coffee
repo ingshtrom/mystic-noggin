@@ -6,7 +6,9 @@ user = require '../../build/server/database/schemas/user-schema'
 logger = require('./logger').logger
 didCallDirectly = require.main == module ? true : false
 
-module.exports.run = run = ->
+conn = db.start()
+
+run = (callback) ->
   cb = ->
     Tag = tag.model
     PostType = postType.model
@@ -28,17 +30,12 @@ module.exports.run = run = ->
     Post.remove (err) ->
       if err then logger.main.error 'Error removing Post collection: %j', err
       else logger.main.debug 'Post collection removed!'
+      db.close()
+      callback?()
 
-    if didCallDirectly
-      require('timers')
-        .setTimeout(
-          -> db.close(),
-          5000
-        )
-
-  if didCallDirectly then conn = db.start()
-
-  if conn.readyState == 1 then cb()
+  if conn?.readyState == 1 then cb()
   else conn.on 'connected', cb
 
-run()
+module.exports.run = run
+
+run() if didCallDirectly

@@ -18,7 +18,7 @@ pkg = require '../../package.json'
 ###
 module.exports.config = (server) ->
   logFile = path.resolve(config.logger.logDir, "stats.log")
-  # config Good server logging for Hapi
+  
   options =
     broadcastInterval: 1000
     opsInterval: 60 * 1000
