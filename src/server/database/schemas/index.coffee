@@ -41,5 +41,5 @@ module.exports.load = ->
       logger.db.error("There was an error loading #{currentSchema}: #{err}")
     else
       areLoaded = true
-      logger.db.info("Loaded schema: #{currentSchema}")
+      logger.info("Loaded schema: #{currentSchema}")
   async.each(schemas, loopFn, errFn)

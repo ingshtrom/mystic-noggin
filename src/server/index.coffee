@@ -17,13 +17,13 @@ module.exports = ->
   myHapi = server.start()
   database.start()
 
-  logger.misc.debug('///////////////////////////////')
-  logger.misc.debug('///////    Config...    ///////')
-  logger.misc.debug('.app => ', config.app)
-  logger.misc.debug('.server => ', config.server)
-  logger.misc.debug('.logger => ', config.logger)
-  logger.misc.debug('.database => ', config.database)
-  logger.misc.debug('///////    ...Config    ///////')
-  logger.misc.debug('///////////////////////////////')
+  logger.debug('///////////////////////////////')
+  logger.debug('///////    Config...    ///////')
+  logger.debug('.app => ', config.app)
+  logger.debug('.server => ', config.server)
+  logger.debug('.logger => ', config.logger)
+  logger.debug('.database => ', config.database)
+  logger.debug('///////    ...Config    ///////')
+  logger.debug('///////////////////////////////')
 
   return myHapi

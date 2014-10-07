@@ -36,21 +36,21 @@ module.exports.start = ->
   # early return in case the connection is already open
   return mongoose.connection if mongoose.connection.readyState == 1 || mongoose.connection.readyState == 2
 
-  logger.db.silly 'going to load schemas',
+  logger.silly 'going to load schemas',
     conn: mongoose.connection.readyState
 
   schemas.load()
 
   mongoose.connect(dbUri, options)
 
-  mongoose.connection.on('error', logger.db.error.bind(logger.db, 'mongodb error: '))
+  mongoose.connection.on('error', logger.error.bind(logger, 'mongodb error: '))
   mongoose.connection.once('close', ->
     isOpen = false
-    logger.db.info('connection with mongodb server closed.')
+    logger.info('connection with mongodb server closed.')
   )
   mongoose.connection.once('open', ->
     isOpen = true
-    logger.db.info('connection with mongodb server established.')
+    logger.info('connection with mongodb server established.')
   )
 
   return mongoose.connection

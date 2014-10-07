@@ -2,13 +2,20 @@ chai = require 'chai'
 expect = chai.expect
 counter = require 'chai-counter'
 request = require 'request'
-config = require '../app-config'
-logger = require('../logger').logger
+test = require '../index'
+config = test.config
+logger = test.logger
 async = require 'async'
 
 before (done) ->
-  require('../db-data-remove').run()
-  require('../db-data-gen').run -> done()
+  logger.debug('before :: ', { dataRemove: require('../db-data-remove') })
+  require('../db-data-remove')
+    .runAsync()
+    .then ->
+      require('../db-data-gen')
+        .runAsync().then(done)
+    .catch (err) ->
+      logger.error('Error during before :: ', { error: err })
 
 describe 'Tag Schema', ->
   describe 'GET /api/tags', ->

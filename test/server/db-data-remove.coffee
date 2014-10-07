@@ -3,39 +3,67 @@ post = require '../../build/server/database/schemas/post-schema'
 postType = require '../../build/server/database/schemas/post-type-schema'
 tag = require '../../build/server/database/schemas/tag-schema'
 user = require '../../build/server/database/schemas/user-schema'
-logger = require('./logger').logger
+test = require './index'
+P = require('bluebird')
+logger = test.logger
 didCallDirectly = require.main == module ? true : false
 
 conn = db.start()
 
-run = (callback) ->
+run = (resolve, reject) ->
   cb = ->
     Tag = tag.model
     PostType = postType.model
     User = user.model
     Post = post.model
 
-    Tag.remove (err) ->
-      if err then logger.main.error 'Error removing Tag collection ::', err
-      else logger.main.debug 'Tag collection removed!'
+    removeTagAsync = new P (resolve, reject) ->
+      Tag.remove()
+        .then ->
+          logger.debug('Tag collection removed!')
+          resolve()
+        .catch (err) ->
+          logger.error('Error removing Tag collection :: ', { error: err })
+          reject()
 
-    PostType.remove (err) ->
-      if err then logger.main.error 'Error removing PostType collection: %j', err
-      else logger.main.debug 'PostType collection removed!'
+    removePostTypeAsync = new P (resolve, reject) ->
+      PostType.remove()
+        .then ->
+          logger.debug('PostType collection removed!')
+          resolve()
+        .catch (err) ->
+          logger.error('Error removing PostType collection :: ', { error: err })
+          reject()
 
-    User.remove (err) ->
-      if err then logger.main.error 'Error removing User collection: %j', err
-      else logger.main.debug 'User collection removed!'
+    removeUserAsync = new P (resolve, reject) ->
+      User.remove()
+        .then ->
+          logger.debug('User collection removed!')
+          resolve()
+        .catch (err) ->
+          logger.error('Error removing User collection :: ', { error: err })
+          reject()
 
-    Post.remove (err) ->
-      if err then logger.main.error 'Error removing Post collection: %j', err
-      else logger.main.debug 'Post collection removed!'
-      db.close()
-      callback?()
+    removePostAsync = new P (resolve, reject) ->
+    Post.remove()
+      .then ->
+        logger.debug('Post collection removed!')
+        resolve()
+      .catch (err) ->
+        logger.error('Error removing Post collection :: ', { error: err })
+      .finally -> db.close()
+
+    removeTagAsync()
+      .then removePostTypeAsync
+      .then removeUserAsync
+      .then removePost
+      .catch (err) -> logger.error('Undefined error :: ', { error: err })
 
   if conn?.readyState == 1 then cb()
   else conn.on 'connected', cb
 
-module.exports.run = run
+module.exports.runAsync = runAsync = new P(run)
 
-run() if didCallDirectly
+if didCallDirectly
+  runAsync()
+    .catch (err) -> logger.err('Error: %j', err)

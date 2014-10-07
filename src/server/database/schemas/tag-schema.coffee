@@ -3,8 +3,11 @@
   @module mystic-noggin
   @submodule server/database/schemas/tag-schema
   @requires {module} mongoose
+  @requires {module} bluebird
+  @requires {submodule} server/logger
 ###
 mongoose = require('mongoose')
+P = require('bluebird')
 logger = require('../../logger').logger
 
 ###
@@ -43,6 +46,10 @@ module.exports.load = ->
     usage: { type: Number, default: 0 }
   )
 
-  module.exports.model = mongoose.model('Tag', tagSchema)
+  Tag = mongoose.model('Tag', tagSchema)
+  P.promisifyAll(Tag)
+  P.promisifyAll(Tag.prototype)
 
-  logger.db.debug 'loaded Tag model into mongoose'
+  module.exports.model = Tag
+
+  logger.debug 'loaded Tag model into mongoose'

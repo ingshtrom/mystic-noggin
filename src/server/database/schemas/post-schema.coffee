@@ -3,11 +3,13 @@
  * @module mystic-noggin
  * @submodule server/database/schemas/post-schema
  * @requires {module} mongoose
+ * @requires {module} bluebird
  * @requires {submodule} server/database/schemas/tag-schema
  * @requires {submodule} server/database/schemas/post-type-schema
  * @requires {submodule} server/database/schemas/user-schema
 ###
 mongoose = require('mongoose')
+P = require 'bluebird'
 tagsSchema = require('./tag-schema').schema
 postTypeSchema = require('./post-type-schema').schema
 userSchema = require('./user-schema').schema
@@ -68,6 +70,10 @@ module.exports.load = ->
     ]
   )
 
-  module.exports.model = mongoose.model('Post', postSchema)
+  Post = mongoose.model('Post', postSchema)
+  P.promisifyAll(Post)
+  P.promisifyAll(Post.prototype)
 
-  logger.db.debug 'loaded Post model into mongoose'
+  module.exports.model = Post
+
+  logger.debug 'loaded Post model into mongoose'

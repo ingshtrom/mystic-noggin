@@ -25,5 +25,5 @@ module.exports.start = ->
   server = new Hapi.Server(config.server.port)
   server = packConfig(server)
   server = routeConfig(server)
-  server.start -> logger.misc.debug('Server running at:', server.info.uri)
+  server.start -> logger.debug('Server running at:', server.info.uri)
   return server

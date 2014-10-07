@@ -39,7 +39,7 @@ logRoot = path.resolve(module.exports.app.root, 'logs')
 ###
 module.exports.logger =
   logDir: logRoot
-  defaultLogFile: path.resolve(logRoot, "mystic-noggin.log")
+  defaultLogFile: path.resolve(logRoot, "mystic-noggin")
   logLevel: 'silly'
   maxFileSize: 102400
 

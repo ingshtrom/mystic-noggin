@@ -3,9 +3,11 @@
   @module mystic-noggin
   @submodule server/database/schemas/user-schema
   @requires {module} mongoose
+  @requires {module} bluebird
   @requires {submodule} server/logger
 ###
 mongoose = require('mongoose')
+P = require('bluebird')
 logger = require('../../logger').logger
 
 ###
@@ -52,6 +54,10 @@ module.exports.load = ->
     }
   )
 
-  module.exports.model = mongoose.model('User', userSchema)
+  User = mongoose.model('User', userSchema)
+  P.promisifyAll(User)
+  P.promisifyAll(User.prototype)
 
-  logger.db.debug 'loaded User model into mongoose'
+  module.exports.model = User
+
+  logger.debug 'loaded User model into mongoose'

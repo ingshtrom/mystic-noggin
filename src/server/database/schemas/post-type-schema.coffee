@@ -3,9 +3,11 @@
   @module mystic-noggin
   @submodule server/database/schemas/post-type-schema
   @requires {module} mongoose
+  @requires {module} bluebird
   @requires {submodule} server/logger
 ###
 mongoose = require('mongoose')
+P = require('bluebird')
 logger = require('../../logger').logger
 
 ###
@@ -44,6 +46,10 @@ module.exports.load = ->
     usage: { type: Number, default: 0 }
   )
 
-  module.exports.model = mongoose.model('PostType', postTypeSchema)
+  PostType = mongoose.model('PostType', postTypeSchema)
+  P.promisifyAll(PostType)
+  P.promisifyAll(PostType.prototype)
 
-  logger.db.debug 'loaded PostType model into mongoose'
+  module.exports.model = PostType
+
+  logger.debug 'loaded PostType model into mongoose'

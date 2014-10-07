@@ -3,13 +3,15 @@ post = require '../../build/server/database/schemas/post-schema'
 postType = require '../../build/server/database/schemas/post-type-schema'
 tag = require '../../build/server/database/schemas/tag-schema'
 user = require '../../build/server/database/schemas/user-schema'
-logger = require('./logger').logger
+test = require './index'
+logger = test.logger
 async = require 'async'
+P = require 'bluebird'
 didCallDirectly = require.main == module ? true : false
 
 conn = db.start()
 
-run = (callback) ->
+run = (resolve, reject) ->
   cb = ->
     Tag = tag.model
     Post = post.model
@@ -25,22 +27,24 @@ run = (callback) ->
         tmp = new Tag()
         tmp.name = "tag#{i}"
         tags.push tmp
-        tmp.save (err, doc) ->
-          if err
-            logger.main.error('failed to create tag: %j', err)
-          else
-            logger.main.debug('created tag: %j', doc.name)
+        tmp.saveAsync()
+          .then (doc) ->
+            logger.debug('created tag: %j', doc.name)
+          .catch (err) ->
+              logger.error('failed to create tag :: ', { error: err })
+    createTagsAsync = P.promisify(createTags);
 
     createPostTypes = ->
       for i in [1..50]
         tmp = new PostType()
         tmp.name = "postType#{i}"
         postTypes.push tmp
-        tmp.save (err, doc) ->
-          if err
-            logger.main.error('failed to create post type: %j', err)
-          else
-            logger.main.debug('created post type: %j', doc.name)
+        tmp.saveAsync()
+          .then (doc) ->
+            logger.debug('created post type: %j', doc.name)
+          .catch (err) ->
+            logger.error('failed to create post type :: ', { error: err })
+    createPostTypesAsync = P.promisify(createPostTypes)
 
     createUsers = ->
       for i in [1..50]
@@ -51,11 +55,12 @@ run = (callback) ->
         tmp.meta.lastName = "linquist#{i}"
         tmp.meta.email = "foobar#{i}@baz.boo"
         users.push tmp
-        tmp.save (err, doc) ->
-          if err
-            logger.main.error('failed to create user: %j', err)
-          else
-            logger.main.debug('created user: %j', doc.username)
+        tmp.saveAsync()
+          .then (doc) ->
+            logger.debug('created user: %j', doc.username)
+          .catch (err) ->
+            logger.error('failed to create user :: ', { error: err })
+    createUsersAsync = P.promisify(createUsers)
 
     createPosts = ->
       for i in [1..50]
@@ -67,26 +72,29 @@ run = (callback) ->
         tmp.type = postTypes[i]._id
         tmp.content = "content biatch#{i}"
         tmp.comments = []
-        tmp.save (err, doc) ->
-          if err
-            logger.main.error('failed to create post: %j', err)
-          else
-            logger.main.debug('created post: %j', doc.title)
+        tmp.saveAsync()
+          .then (doc) ->
+            logger.debug('created post: %j', doc.title)
+          .catch (err) ->
+            logger.error('failed to create post :: ', { error: err })
+    createPostsAsync = P.promisify(createPosts)
 
-    createTags()
-    createPostTypes()
-    createUsers()
-    setTimeout createPosts, 1000
-    setTimeout(
-      ->
-        db.close()
-        callback?()
-      2000
-    )
+    createTagsAsync()
+      .then createPostTypesAsync
+      .then createUsersAsync
+      .then createPostsAsync
+      .then ->
+        resolve()
+      .catch (err) ->
+        logger.error('Unidentified error while generating test data :: ', { error: err })
+        reject()
+      .finally -> db.close()
 
   if conn?.readyState == 1 then cb()
   else conn.on 'connected', cb
 
-module.exports.run = run
+module.exports.runAsync = runAsync = new P(run)
 
-run() if didCallDirectly
+if didCallDirectly
+  runAsync()
+    .catch (err) -> logger.error('Error :: ', { error: err })

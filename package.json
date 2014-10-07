@@ -25,12 +25,14 @@
   "homepage": "https://github.com/ingshtrom/mystic-noggin",
   "dependencies": {
     "async": "^0.9.0",
+    "bluebird": "^0.11.6",
     "good": "^2.2.3",
     "hapi": "^6.7.1",
     "hapi-swagger": "^0.3.0",
     "joi": "^4.6.2",
     "lodash": "^2.4.1",
     "mongoose": "^3.8.15",
+    "string": "^2.1.0",
     "winston": "^0.7.3"
   },
   "devDependencies": {
