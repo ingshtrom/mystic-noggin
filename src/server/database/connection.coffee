@@ -2,6 +2,7 @@
  * The bootstrapping for connecting to the MongoDB database.
  * @module mystic-noggin
  * @submodule server/database/connection
+ * @requires {module} bluebird
  * @requires {module} mongoose
  * @requires {module} async
  * @requires {module} fs
@@ -9,7 +10,8 @@
  * @requires {submodule} server/app-config
  * @requires {submodules} server/logger
 ###
-mongoose = require('mongoose')
+P = require('bluebird')
+mongoose = P.promisifyAll(require('mongoose'))
 async = require('async')
 fs = require('fs')
 path = require('path')
@@ -36,12 +38,10 @@ module.exports.start = ->
   # early return in case the connection is already open
   return mongoose.connection if mongoose.connection.readyState == 1 || mongoose.connection.readyState == 2
 
-  logger.silly 'going to load schemas',
+  logger.debug 'going to load schemas',
     conn: mongoose.connection.readyState
 
   schemas.load()
-
-  mongoose.connect(dbUri, options)
 
   mongoose.connection.on('error', logger.error.bind(logger, 'mongodb error: '))
   mongoose.connection.once('close', ->
@@ -52,6 +52,8 @@ module.exports.start = ->
     isOpen = true
     logger.info('connection with mongodb server established.')
   )
+
+  mongoose.connect(dbUri, options)
 
   return mongoose.connection
 

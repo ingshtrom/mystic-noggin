@@ -10,6 +10,7 @@
   @requires {submodule} server/database/schemas/post-schema
 ###
 async = require 'async'
+logger = require('../../logger').logger
 schemas = [
   require './tag-schema'            # required by ./post-schema
   require './post-type-schema'      # required by ./post-schema
@@ -24,7 +25,7 @@ schemas = [
   @type {Boolean}
   @private
 ###
-areLoaded = false
+module.exports.areLoaded = false
 
 ###
   Loads all schemas defined in the 'schemas' variable.
@@ -38,8 +39,8 @@ module.exports.load = ->
     schema.load()
   errFn = (err) ->
     if err
-      logger.db.error("There was an error loading #{currentSchema}: #{err}")
+      logger.error("There was an error loading #{currentSchema}: #{err}")
     else
-      areLoaded = true
+      module.exports.areLoaded = true
       logger.info("Loaded schema: #{currentSchema}")
   async.each(schemas, loopFn, errFn)

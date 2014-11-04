@@ -3,26 +3,14 @@
 	{
 		"selected_items":
 		[
+			[
+				"createPost",
+				"createPostTypes"
+			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "test/server/index.coffee",
-			"settings":
-			{
-				"buffer_size": 115,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test/server/db-data-gen.coffee",
-			"settings":
-			{
-				"buffer_size": 2593,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -78,25 +66,43 @@
 	[
 		"/Users/Alex/GitHub/mystic-noggin",
 		"/Users/Alex/GitHub/mystic-noggin/src",
-		"/Users/Alex/GitHub/mystic-noggin/test",
-		"/Users/Alex/GitHub/mystic-noggin/test/server",
-		"/Users/Alex/GitHub/mystic-noggin/test/server/specs"
+		"/Users/Alex/GitHub/mystic-noggin/src/server",
+		"/Users/Alex/GitHub/mystic-noggin/src/server/database",
+		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas",
+		"/Users/Alex/GitHub/mystic-noggin/tasks",
+		"/Users/Alex/GitHub/mystic-noggin/tasks/options"
 	],
 	"file_history":
 	[
 		"/Users/Alex/GitHub/mystic-noggin/test/server/db-data-remove.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/test/server/index.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/test/server/specs/tags-schema-spec.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/test/server/db-data-gen.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/src/server/database/connection.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/build/server/database/connection.js",
+		"/Users/Alex/GitHub/mystic-noggin/node_modules/chai/CONTRIBUTING.md",
+		"/Users/Alex/GitHub/mystic-noggin/coffeelint.json",
+		"/Users/Alex/GitHub/mystic-noggin/tasks/options/clean.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/tasks/options/gruntConfig.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/test-out/server/tags-schema-spec.js",
+		"/Users/Alex/GitHub/mystic-noggin/build/server/database/schemas/tag-schema.js",
+		"/Users/Alex/GitHub/mystic-noggin/build/server/api/tags.js",
+		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/tag-schema.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/user-schema.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/build/server/database/schemas/user-schema.js",
+		"/Users/Alex/GitHub/mystic-noggin/node_modules/coffeelint/doc/user.md",
+		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/post-type-schema.coffee",
+		"/Users/Alex/GitHub/mystic-noggin/package.json",
+		"/Users/Alex/GitHub/mystic-noggin/node_modules/grunt/node_modules/rimraf/test/test-async.js",
+		"/Users/Alex/GitHub/mystic-noggin/build/server/database/schemas/post-type-schema.js",
+		"/Users/Alex/GitHub/mystic-noggin/build/server/database/schemas/post-schema.js",
+		"/Users/Alex/GitHub/mystic-noggin/node_modules/mongoose/examples/population/population-options.js",
+		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/post-schema.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/src/server/hapi-server.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/src/server/index.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/index.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/post-type-schema.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/src/server/logger.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/src/server/api/tags.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/user-schema.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/tag-schema.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/src/server/database/schemas/post-schema.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/src/server/database/connection.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/test/server/specs/tags-schema-spec.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/test/server/db-data-gen.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/logs/mystic-noggin.log",
 		"/Users/Alex/GitHub/mystic-noggin/test/server/logger.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/test-out/server/db-data-remove.js",
@@ -105,7 +111,6 @@
 		"/Users/Alex/GitHub/mystic-noggin/tasks/dev-server.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/src/server/app-config.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/test/server/app-config.coffee",
-		"/Users/Alex/GitHub/mystic-noggin/test/server/index.coffee",
 		"/Users/Alex/GitHub/mystic-noggin/node_modules/good/AUTHORS",
 		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/Alex/GitHub/mystic-noggin/build/server/app-config.js",
@@ -113,8 +118,6 @@
 		"/Users/Alex/GitHub/mystic-noggin/node_modules/grunt/appveyor.yml",
 		"/Users/Alex/GitHub/mystic-noggin/node_modules/chai/lib/chai/utils/addProperty.js",
 		"/Users/Alex/GitHub/mystic-noggin/node_modules/coffeelint/lib/configfinder.js",
-		"/Users/Alex/GitHub/mystic-noggin/node_modules/chai/CONTRIBUTING.md",
-		"/Users/Alex/GitHub/mystic-noggin/coffeelint.json",
 		"/Users/Alex/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
 		"/Users/Alex/GitHub/mystic-noggin/src/server/database/README.md",
 		"/Users/Alex/GitHub/mystic-noggin/node_modules/coffeelint/src/reporters/checkstyle.coffee",
@@ -143,6 +146,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"removePost",
+			"then",
+			"foobar",
+			"module",
+			"Promise",
 			"debug",
 			"logger.main",
 			"logger",
@@ -173,67 +181,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "test/server/index.coffee",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 115,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								114,
-								114
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "test/server/db-data-gen.coffee",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2593,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1393,
-								1393
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 638.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -283,6 +232,34 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"connection",
+				"build/server/database/connection.js"
+			],
+			[
+				"db-data-gen",
+				"test/server/db-data-gen.coffee"
+			],
+			[
+				"tags-schea",
+				"test/server/specs/tags-schema-spec.coffee"
+			],
+			[
+				"user-schem",
+				"src/server/database/schemas/user-schema.coffee"
+			],
+			[
+				"post-type",
+				"src/server/database/schemas/post-type-schema.coffee"
+			],
+			[
+				"tag-schema",
+				"src/server/database/schemas/tag-schema.coffee"
+			],
+			[
+				"post-typeschem",
+				"src/server/database/schemas/post-type-schema.coffee"
+			],
 			[
 				"db-data-remove",
 				"test/server/db-data-remove.coffee"

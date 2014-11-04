@@ -8,14 +8,12 @@ logger = test.logger
 async = require 'async'
 
 before (done) ->
-  logger.debug('before :: ', { dataRemove: require('../db-data-remove') })
-  require('../db-data-remove')
-    .runAsync()
-    .then ->
-      require('../db-data-gen')
-        .runAsync().then(done)
+  require('../db-reset').runAsync()
+    .then -> done()
     .catch (err) ->
-      logger.error('Error during before :: ', { error: err })
+      logger.error('Error during before function');
+      logger.error('message: ' + err.message)
+      logger.error('stack trace: ' + err.stack)
 
 describe 'Tag Schema', ->
   describe 'GET /api/tags', ->
