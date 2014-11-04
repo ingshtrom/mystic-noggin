@@ -49,12 +49,11 @@ describe 'Tag Schema', ->
 
     it 'should return only 5 tags with limit parameter', (done) ->
       # expect 5 tags
-      counter.expect(1)
+      counter.expect(2)
       request "#{url}?limit=5", (err, res, body) ->
-        logger.main.debug "requested #{url}",
-          err: err
-          res: res
-          body: body
+        body = JSON.parse(body)
+        expect(body.tags.length).to.be.a("number").cc
+                                .and.equal(5).cc
         counter.assert()
         done()
     #

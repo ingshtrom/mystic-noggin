@@ -12,16 +12,15 @@ logger = require('../logger').logger
 
 _getTags = (request, reply) ->
   cb = (err, data) ->
-    if err then reply({ err: 'Error finding tags.' }).code(401)
+    if err then reply({ err: 'Error finding tags.' }).code(400)
     else reply({ tags: data })
 
   tmpLimit = request.query.limit
-  limit = tmpLimit ? tmpLimit : 20
-  logger.info "limit received :: ", { limit: limit }
+  limit = if tmpLimit? then tmpLimit else 20
   tags.model
     .find({})
-    .limit(limit)
     .select('_id name usage')
+    .limit(limit)
     .exec(cb)
 
 ###
@@ -41,7 +40,7 @@ module.exports.config = (server) ->
       notes: [
         'Get all tags.'
         'Error status codes'
-        '401, Error finding tags'
+        '400, Error finding tags'
         '500, Internal Server Error'
       ]
       validate:
