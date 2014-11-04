@@ -42,21 +42,21 @@ describe 'Tag Schema', ->
       cb = (err, res, body) ->
         body = JSON.parse(body)
         expect(body.tags.length).to.be.a("number").cc
-                                .and.equal(50).cc
+                                .and.equal(20).cc
         counter.assert()
         done()
       request url, cb
-    #
-    # it 'should return only 5 tags with limit parameter', (done) ->
-    #   # expect 5 tags
-    #   counter.expect(1)
-    #   request "#{url}?limit=5", (err, res, body) ->
-    #     logger.main.debug "requested #{url}",
-    #       err: err
-    #       res: res
-    #       body: body
-    #     counter.assert()
-    #     done()
+
+    it 'should return only 5 tags with limit parameter', (done) ->
+      # expect 5 tags
+      counter.expect(1)
+      request "#{url}?limit=5", (err, res, body) ->
+        logger.main.debug "requested #{url}",
+          err: err
+          res: res
+          body: body
+        counter.assert()
+        done()
     #
     # it 'should return only names when using filter parameter', ->
     #   # expect 10 tags with only the name property (not usage)

@@ -17,6 +17,7 @@ _getTags = (request, reply) ->
 
   tmpLimit = request.query.limit
   limit = tmpLimit ? tmpLimit : 20
+  logger.info "limit received :: ", { limit: limit }
   tags.model
     .find({})
     .limit(limit)
