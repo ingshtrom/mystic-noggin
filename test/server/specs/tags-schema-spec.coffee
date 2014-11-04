@@ -11,7 +11,7 @@ before (done) ->
   require('../db-reset').runAsync()
     .then -> done()
     .catch (err) ->
-      logger.error('Error during before function');
+      logger.error('Error during before function')
       logger.error('message: ' + err.message)
       logger.error('stack trace: ' + err.stack)
 
@@ -42,7 +42,7 @@ describe 'Tag Schema', ->
       cb = (err, res, body) ->
         body = JSON.parse(body)
         expect(body.tags.length).to.be.a("number").cc
-                                .and.equal(20).cc
+                                .and.equal(50).cc
         counter.assert()
         done()
       request url, cb

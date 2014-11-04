@@ -58,7 +58,7 @@ users = []
 
 createTagsAsync = ->
   new B((resolve, reject)->
-    for i in [1..50]
+    for i in [0..49]
       cur = i
       tmp = new Tag()
       tmp.name = "tag#{cur}"
@@ -66,14 +66,14 @@ createTagsAsync = ->
       tmp.saveAsync()
         .then (doc) ->
           logger.debug('created tag :: ' + doc[0].name)
-          if cur == 50 then resolve()
+          if cur == 49 then resolve()
         .catch (err) ->
           logger.error('failed to create tag :: ' + err)
           reject(err))
 
 createPostTypesAsync = ->
   new B((resolve, reject) ->
-    for i in [1..50]
+    for i in [0..49]
       cur = i
       tmp = new PostType()
       tmp.name = "postType#{cur}"
@@ -81,14 +81,14 @@ createPostTypesAsync = ->
       tmp.saveAsync()
         .then (doc) ->
           logger.debug('created post type :: ' + doc[0].name)
-          if cur == 50 then resolve()
+          if cur == 49 then resolve()
         .catch (err) ->
           logger.error('failed to create post type :: ' + err)
           reject(err))
 
 createUsersAsync = ->
   new B((resolve, reject) ->
-    for i in [1..50]
+    for i in [0..49]
       cur = i
       tmp = new User()
       tmp.username = "user#{cur}"
@@ -97,18 +97,17 @@ createUsersAsync = ->
       tmp.meta.lastName = "linquist#{cur}"
       tmp.meta.email = "foobar#{cur}@baz.boo"
       users.push tmp
-      logger.silly("pushing #{cur} is " + tmp)
       tmp.saveAsync()
         .then (doc) ->
           logger.debug('created user :: ' + doc[0].username)
-          if cur == 50 then resolve()
+          if cur == 49 then resolve()
         .catch (err) ->
           logger.error('failed to create user :: ' + err )
           reject(err))
 
 createPostsAsync = ->
   new B((resolve, reject) ->
-    for i in [1..50]
+    for i in [0..49]
       cur = i
       tmp = new Post()
       tmp.title = "post#{cur}"
@@ -121,43 +120,44 @@ createPostsAsync = ->
       tmp.saveAsync()
         .then (doc) ->
           logger.debug('created post :: ' + doc[0].title)
-          if cur == 50 then resolve()
+          if cur == 49 then resolve()
         .catch (err) ->
           logger.error('failed to create post :: ' + err)
-          reject(err))
+          reject(err)
+  )
 
-module.exports.run = ->
-  db.start()
+module.exports.runAsync = ->
+  new B((resolve, reject) ->
+    db.start()
 
-  Tag = tag.model
-  B.promisifyAll(Tag)
-  B.promisifyAll(Tag.prototype)
+    Tag = tag.model
+    B.promisifyAll(Tag)
+    B.promisifyAll(Tag.prototype)
 
-  PostType = postType.model
-  B.promisifyAll(PostType)
-  B.promisifyAll(PostType.prototype)
+    PostType = postType.model
+    B.promisifyAll(PostType)
+    B.promisifyAll(PostType.prototype)
 
-  User = user.model
-  B.promisifyAll(User)
-  B.promisifyAll(User.prototype)
+    User = user.model
+    B.promisifyAll(User)
+    B.promisifyAll(User.prototype)
 
-  Post = post.model
-  B.promisifyAll(Post)
-  B.promisifyAll(Post.prototype)
+    Post = post.model
+    B.promisifyAll(Post)
+    B.promisifyAll(Post.prototype)
 
-  removeTagAsync()
-    .then -> removePostTypeAsync()
-    .then -> removeUserAsync()
-    .then -> removePostAsync()
-    .then -> createTagsAsync()
-    .then -> createPostTypesAsync()
-    .then -> createUsersAsync()
-    .then -> createPostsAsync()
-    .then ->
-      db.close()
-      resolve()
-    .catch (err) ->
-      logger.error('Undefined error running db-reset :: ' + err )
-      reject(err)
-
-module.exports.runAsync = B.promisify(module.exports.run)
+    removeTagAsync()
+      .then -> removePostTypeAsync()
+      .then -> removeUserAsync()
+      .then -> removePostAsync()
+      .then -> createTagsAsync()
+      .then -> createPostTypesAsync()
+      .then -> createUsersAsync()
+      .then -> createPostsAsync()
+      .then ->
+        db.close()
+        resolve()
+      .catch (err) ->
+        logger.error('Undefined error running db-reset :: ' + err )
+        reject()
+  )
